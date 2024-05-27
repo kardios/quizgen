@@ -22,7 +22,7 @@ file.close()
 st.set_page_config(page_title="Quiz Generator", page_icon=":sunglasses:",)
 st.write("**Quiz Generator**")
 
-uploaded_file = st.file_uploader("Upload a PDF to summarise or analyse:", type = "pdf")
+uploaded_file = st.file_uploader("Upload a PDF to generate a quiz:", type = "pdf")
 raw_text = ""
 if uploaded_file is not None:
   doc_reader = PdfReader(uploaded_file)
