@@ -30,35 +30,36 @@ if uploaded_file is not None:
     text = page.extract_text()
     if text:
       raw_text = raw_text + text + "\n"
-  
-  with st.spinner("Running AI Model..."):
-    start = time.time()
-    input_text = prompt + "<SOURCE>\n\n" + raw_text + "</SOURCE>\n\n"
-    
-    message = anthropic.messages.create(
-      model = "claude-3-opus-20240229",
-      max_tokens = 4096,
-      temperature = 0,
-      system= "",
-      messages=[
-        {  
-          "role": "user",
-          "content": [
-            {
-              "type": "text",
-              "text": input_text
-            }
-          ]
-        }
-      ]
-    )
-    output_text = message.content[0].text
-    end = time.time()
 
-    container = st.container(border=True)
-    container.write(output_text)
-    container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
-    bot.send_message(chat_id=recipient_user_id, text="QuizGen")
-    st.download_button(':floppy_disk:', output_text)
-  #except:
-  #  st.error(" Error occurred when running model", icon="🚨")
+  try:
+    with st.spinner("Running AI Model..."):
+      start = time.time()
+      input_text = prompt + "<SOURCE>\n\n" + raw_text + "</SOURCE>\n\n"
+    
+      message = anthropic.messages.create(
+        model = "claude-3-opus-20240229",
+        max_tokens = 4096,
+        temperature = 0,
+        system= "",
+        messages=[
+          {  
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": input_text
+              }
+            ]
+          }
+        ]
+      )
+      output_text = message.content[0].text
+      end = time.time()
+
+      container = st.container(border=True)
+      container.write(output_text)
+      container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
+      bot.send_message(chat_id=recipient_user_id, text="QuizGen")
+      st.download_button(':floppy_disk:', output_text)
+  except:
+    st.error(" Error occurred when running model", icon="🚨")
