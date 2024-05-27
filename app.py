@@ -52,11 +52,11 @@ if uploaded_file is not None:
         }
       ]
     )
-    output = message.content[0].text
+    output_text = message.content[0].text
     end = time.time()
 
     container = st.container(border=True)
-    container.write(output)
+    container.write(output_text)
     container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
     bot.send_message(chat_id=recipient_user_id, text="QuizGen")
     st.download_button(':floppy_disk:', output_text)
