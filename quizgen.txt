@@ -9,20 +9,29 @@ Create 10 multiple choice questions based on these key points from the input SOU
 
 Make sure the incorrect answer choices are plausible but definitely wrong. The questions should not be about trivial details, but should test understanding of the main ideas and important information from the text.
 
-After you have generated the 10 questions and answers, please output the full quiz as a numbered list of questions. The format should look like this:
+After you have generated the 10 questions and answers, please output the full quiz as a JSON object only. The format should look like this:
 
-1. Question text 
-A. Answer choice
-B. Answer choice 
-C. Answer choice
-D. Answer choice
-ANSWER: C
-
-2. Question text
-A. Answer choice
-B. Answer choice
-C. Answer choice 
-D. Answer choice
-ANSWER: A
+[
+ {
+   "question": "Question text",
+   "options": [
+     "A. Answer choice",
+     "B. Answer choice", 
+     "C. Answer choice",
+     "D. Answer choice"
+   ],
+   "answer": "C"
+ },
+ {
+   "question": "Question text",
+   "options": [
+     "A. Answer choice",
+     "B. Answer choice",
+     "C. Answer choice", 
+     "D. Answer choice"
+   ],
+   "answer": "A"
+ }
+]
 
 (etc. for all 10 questions)
