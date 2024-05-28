@@ -49,6 +49,13 @@ if uploaded_file is not None:
                 "type": "text",
                 "text": input_text
               }
+            ],
+            "role": "assistant",
+            "content": [
+              {
+                "type": "text",
+                "text": "{"
+              }
             ]
           }
         ]
