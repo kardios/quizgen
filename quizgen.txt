@@ -9,7 +9,7 @@ Create 10 multiple choice questions based on these key points from the input SOU
 
 Make sure the incorrect answer choices are plausible but definitely wrong. The questions should not be about trivial details, but should test understanding of the main ideas and important information from the text.
 
-After you have generated the 10 questions and answers, please output the full quiz as a JSON object. Please refer to the <output> tag for the format and do not introduce any other content.
+After you have generated the 10 questions and answers, please output the full quiz as a JSON object. Please refer to the <output> tag for the format.
 
 <output>
 [
