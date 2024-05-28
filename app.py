@@ -56,6 +56,9 @@ if uploaded_file is not None:
       output_text = "[" + message.content[0].text
       end = time.time()
 
+      quiz = json.loads(output_text)
+      print(quiz)
+      
       container = st.container(border=True)
       container.write(output_text)
       container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
