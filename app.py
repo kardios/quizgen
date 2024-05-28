@@ -45,7 +45,7 @@ if uploaded_file is not None:
           {  
             "role": "user",
             "content": input_text
-          }
+          },
           {
             "role": "assistant",
             "content": "{"
