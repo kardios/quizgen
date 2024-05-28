@@ -40,25 +40,15 @@ if uploaded_file is not None:
         model = "claude-3-opus-20240229",
         max_tokens = 4096,
         temperature = 0,
-        system= "",
-        messages=[
+        system = "",
+        messages = [
           {  
             "role": "user",
-            "content": [
-              {
-                "type": "text",
-                "text": input_text
-              }
-            ]
+            "content": input_text
           }
           {
             "role": "assistant",
-            "content": [
-              {
-                "type": "text",
-                "text": "{"
-              }
-            ]
+            "content": "{"
           }
         ]
       )
