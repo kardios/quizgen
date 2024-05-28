@@ -53,7 +53,7 @@ if uploaded_file is not None:
           }
         ]
       )
-      output_text = message.content[0].text
+      output_text = "[" + message.content[0].text
       end = time.time()
 
       container = st.container(border=True)
