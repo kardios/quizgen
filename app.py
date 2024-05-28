@@ -57,7 +57,7 @@ if uploaded_file is not None:
       end = time.time()
 
       quiz = json.loads(output_text)
-      print(quiz)
+      st.write(quiz)
       
       container = st.container(border=True)
       container.write(output_text)
