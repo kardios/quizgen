@@ -60,17 +60,16 @@ if uploaded_file is not None:
       #st.write(quiz)
       #st.write(quiz[0]['question'])
 
-      options = quiz[0]['options']
+      for question in quiz:
+        options = question['options']
+        user_answer = st.radio(
+          question['question'],
+          options,
+        ) 
 
-      user_answer = st.radio(
-        quiz[0]['question'],
-        options,
-        index=0,
-      )
-
-      st.write("You selected:", user_answer)
-      selected_index = options.index(user_answer)
-      st.write(f"Index of the selected answer is: {selected_index}")
+      #st.write("You selected:", user_answer)
+      #selected_index = options.index(user_answer)
+      #st.write(f"Index of the selected answer is: {selected_index}")
       
       container = st.container(border=True)
       container.write(output_text)
