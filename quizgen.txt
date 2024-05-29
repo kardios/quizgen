@@ -1,6 +1,6 @@
 Your task is to create a multiple choice quiz to test the user's understanding of the input SOURCE.
 
-Please read the input SOURCE inside <SOURCE> tags carefully and analyze it to identify the key concepts, facts, and ideas that would make good quiz questions to test understanding and recall of the material.
+Please read the input SOURCE inside <SOURCE> tags carefully and analyze it to identify the key concepts, facts, and ideas that would make good and challenging quiz questions to test understanding and recall of the material.
 
 Create 10 multiple choice questions based on these key points from the input SOURCE. For each question, provide the following:
 - The question text 
