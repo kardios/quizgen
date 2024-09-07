@@ -1,4 +1,5 @@
 streamlit >= 1.22.0
 anthropic
+openai
 pypdf >= 4.0
 pyTelegramBotAPI
