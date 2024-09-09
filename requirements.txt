@@ -3,3 +3,4 @@ openai
 pydantic
 pypdf >= 4.0
 pyTelegramBotAPI
+st-copy-to-clipboard
