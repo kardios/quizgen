@@ -1,10 +1,11 @@
 import streamlit as st
 import os
 import time
-import json
+import pydantic
 import telebot
-from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+from openai import OpenAI
 from pypdf import PdfReader
+from st_copy_to_clipboard import st_copy_to_clipboard
 
 # Set up Telegram Bot
 recipient_user_id = os.environ['RECIPIENT_USER_ID']
@@ -12,13 +13,55 @@ bot_token = os.environ['BOT_TOKEN']
 bot = telebot.TeleBot(bot_token)
 
 # Retrieve the API keys from the environment variables
-CLAUDE_API_KEY = os.environ["ANTHROPIC_API_KEY"]
+CLIENT_API_KEY = os.environ['OPENAI_API_KEY']
+client = OpenAI(api_key=CLIENT_API_KEY)
 
-anthropic = Anthropic(api_key=CLAUDE_API_KEY)
+class Answer(BaseModel):
+    label: str
+    answer: str
 
-file = open('quizgen.txt','r')
-prompt = file.read()
-file.close()
+class Question(BaseModel):
+    question: str
+    answers: list[Answer]
+    correct_answer: str
+
+class QuizResponse(BaseModel):
+    questions: list[Question]
+
+quiz_prompt = """You are tasked with creating a multiple-choice quiz based on the provided text:
+
+Your goal is to create a quiz consisting of 10 questions that test key concepts from the provided text. Each question in the quiz must adhere to the following format:
+
+1. A clear and concise question.
+2. Four answer options, labeled A, B, C, and D.
+3. One correct answer clearly identified for each question.
+
+When creating the quiz, follow these guidelines:
+
+1. Ensure that the questions cover important information from various parts of the text.
+2. Make the questions challenging but fair, focusing on key concepts rather than minor details.
+3. Create plausible incorrect answer choices that might tempt a quiz taker who doesn't fully understand the material.
+4. Vary the types of questions (e.g., factual recall, concept application, cause-and-effect relationships) to test different aspects of understanding.
+
+Format your output as follows:
+
+Q1: [Insert question here]
+A. [Option A]
+B. [Option B]
+C. [Option C]
+D. [Option D]
+Correct Answer: [Insert correct answer letter]
+
+Q2: [Insert question here]
+A. [Option A]
+B. [Option B]
+C. [Option C]
+D. [Option D]
+Correct Answer: [Insert correct answer letter]
+
+[Continue this format for all 10 questions]
+
+Now, carefully read through the provided text and create 10 multiple-choice questions based on its content. Ensure that your questions and answer choices are clear, concise, and directly related to the information in the text."""
 
 st.set_page_config(page_title="Quiz Generator", page_icon=":sunglasses:",)
 st.write("**Quiz Generator**")
@@ -35,46 +78,24 @@ if uploaded_file is not None:
   try:
     with st.spinner("Running AI Model..."):
       start = time.time()
-      input_text = prompt + "<SOURCE>\n\n" + raw_text + "</SOURCE>\n\n"
-    
-      message = anthropic.messages.create(
-        model = "claude-3-opus-20240229",
-        max_tokens = 4096,
-        temperature = 0,
-        system = "",
-        messages = [
-          {  
-            "role": "user",
-            "content": input_text
-          },
-          {
-            "role": "assistant",
-            "content": "["
-          }
-        ]
-      )
-      output_text = "[" + message.content[0].text
+      completion = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
+                                                      messages=[{"role": "system", "content": quiz_prompt},
+                                                                {"role": "user", "content": raw_text}],
+                                                      response_format=QuizResponse)
+      message = completion.choices[0].message
       end = time.time()
 
-      quiz = json.loads(output_text)
-      #st.write(quiz)
-      #st.write(quiz[0]['question'])
-
-      for question in quiz:
-        options = question['options']
-        user_answer = st.radio(
-          question['question'],
-          options,
-        ) 
-
-      #st.write("You selected:", user_answer)
-      #selected_index = options.index(user_answer)
-      #st.write(f"Index of the selected answer is: {selected_index}")
+      QuizOutput = ""
+      for q in message.parsed.questions:
+        QuizOutput = QuizOutput + q.question + "\n"
+        for a in q.answers:
+          QuizOutput = QuizOutput + "[" + a.label + "] " + a.answer + "\n"
+        QuizOutput = QuizOutput + q.correct_answer + "\n\n"
       
       container = st.container(border=True)
-      container.write(output_text)
+      container.write(QuizOutput)
       container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
       bot.send_message(chat_id=recipient_user_id, text="QuizGen")
-      st.download_button(':floppy_disk:', output_text)
+      st_copy_to_clipboard(output_text)
   except:
     st.error(" Error occurred when running model", icon="🚨")
