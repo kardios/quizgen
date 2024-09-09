@@ -108,11 +108,14 @@ if uploaded_file is not None:
                                                                 {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}])
       check_message = completion_check.choices[0].message
       st.write(check_message)
+      end = time.time()
+
+      st.write("Time to generate: " + str(round(end-start,2)) + " seconds")
         
       #container = st.container(border=True)
       #container.write(QuizOutput)
       #container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
       bot.send_message(chat_id=recipient_user_id, text="QuizGen")
-      st_copy_to_clipboard(QuizOutput)
+      st_copy_to_clipboard(TotalQuizOutput)
   except:
     st.error(" Error occurred when running model", icon="🚨")
