@@ -87,11 +87,11 @@ if uploaded_file is not None:
 
       index = 1
       for q in message.parsed.questions:
-          QuizOutput = "Question " + str(index) + "\n"
-          QuizOutput = QuizOutput + "**" + q.question + "**" + "\n"
+          QuizOutput = "Question " + str(index) + "  \n"
+          QuizOutput = QuizOutput + "**" + q.question + "**" + "  \n"
           for a in q.answers:
-            QuizOutput = QuizOutput + a.label + ". " + a.answer + "\n"
-          QuizOutput = QuizOutput + "Correct Answer: " + q.correct_answer + "\n"
+            QuizOutput = QuizOutput + a.label + ". " + a.answer + "  \n"
+          QuizOutput = QuizOutput + "*Correct Answer: " + q.correct_answer + "*  \n"
           st.markdown(QuizOutput)
           index = index + 1
         
