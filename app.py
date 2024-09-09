@@ -83,8 +83,9 @@ if uploaded_file is not None:
                                                                 {"role": "user", "content": raw_text}],
                                                       response_format=QuizResponse)
       message = completion.choices[0].message
-      end = time.time()
+      st.balloons()
 
+      TotalQuizOutput = ""
       index = 1
       for q in message.parsed.questions:
           QuizOutput = "**Question " + str(index) + ": " + q.question + "**  \n"
@@ -96,6 +97,17 @@ if uploaded_file is not None:
               st.markdown(ca)
           QuizOutput = QuizOutput + ca
           index = index + 1
+          TotalQuizOutput = TotalQuizOutput + "<Question>\n" + QuizOutput + "\n</Question>\n\n" 
+        end = time.time()
+
+      st.write("Time to generate: " + str(round(end-start,2)) + " seconds")
+
+      start = time.time()
+      completion_check = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
+                                                      messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags."},
+                                                                {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}])
+      check_message = completion_check.choices[0].message
+      st.write(check_message)
         
       #container = st.container(border=True)
       #container.write(QuizOutput)
