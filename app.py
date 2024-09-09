@@ -81,7 +81,7 @@ if uploaded_file is not None:
       completion = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
                                                       messages=[{"role": "system", "content": quiz_prompt},
                                                                 {"role": "user", "content": raw_text}],
-                                                      response_format=QuizResponse)
+                                                      response_format=QuizResponse, temperature = 0)
       message = completion.choices[0].message
 
       TotalQuizOutput = ""
@@ -103,10 +103,10 @@ if uploaded_file is not None:
       st.write("Time to generate: " + str(round(end-start,2)) + " seconds")
 
       start = time.time()
-      completion_check = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
-                                                            messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags. Present your answer as a percentage of accuracy, where 100% means total accuracy."},
-                                                                      {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}])
-      check_message = completion_check.choices[0].message
+      completion_check = client.chat.completions.create(model="gpt-4o",
+                                                            messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags. Start your answer by providing a percentage score of the accuracy, where 100% means total accuracy."},
+                                                                      {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}], temperature = 0)
+      check_message = completion_check.choices[0].message.content
       st.write(check_message)
       end = time.time()
       
