@@ -30,7 +30,7 @@ class QuizResponse(BaseModel):
 
 quiz_prompt = """You are tasked with creating a multiple-choice quiz based on the provided text:
 
-Your goal is to create a quiz consisting of 10 questions that test key concepts from the provided text. Each question in the quiz must adhere to the following format:
+Your goal is to create a quiz consisting of 10 high-quality questions that test understanding of the provided text. Each question in the quiz must adhere to the following format:
 
 1. A clear and concise question.
 2. Four answer options, labeled A, B, C, and D.
