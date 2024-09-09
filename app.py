@@ -1,8 +1,8 @@
 import streamlit as st
 import os
 import time
-import pydantic
 import telebot
+from pydantic import BaseModel
 from openai import OpenAI
 from pypdf import PdfReader
 from st_copy_to_clipboard import st_copy_to_clipboard
