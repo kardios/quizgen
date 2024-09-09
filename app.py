@@ -104,9 +104,9 @@ if uploaded_file is not None:
 
       start = time.time()
       completion_check = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
-                                                            messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags."},
+                                                            messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags. Present your answer as a percentage of accuracy, where 100% means total accuracy."},
                                                                       {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}])
-      check_message = completion_check.choices[0].message
+      check_message = completion_check.choices[0].message["content"]
       st.write(check_message)
       end = time.time()
       
