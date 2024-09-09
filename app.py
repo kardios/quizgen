@@ -83,7 +83,6 @@ if uploaded_file is not None:
                                                                 {"role": "user", "content": raw_text}],
                                                       response_format=QuizResponse)
       message = completion.choices[0].message
-      st.balloons()
 
       TotalQuizOutput = ""
       index = 1
@@ -99,7 +98,8 @@ if uploaded_file is not None:
           index = index + 1
           TotalQuizOutput = TotalQuizOutput + "<Question>\n" + QuizOutput + "\n</Question>\n\n" 
       end = time.time()
-
+      
+      st.balloons()
       st.write("Time to generate: " + str(round(end-start,2)) + " seconds")
 
       start = time.time()
@@ -109,7 +109,8 @@ if uploaded_file is not None:
       check_message = completion_check.choices[0].message
       st.write(check_message)
       end = time.time()
-
+      
+      st.snow()  
       st.write("Time to generate: " + str(round(end-start,2)) + " seconds")
         
       #container = st.container(border=True)
