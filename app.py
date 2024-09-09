@@ -87,11 +87,12 @@ if uploaded_file is not None:
 
       QuizOutput = ""
       for q in message.parsed.questions:
-        QuizOutput = QuizOutput + q.question + "\n"
+        QuizOutput = QuizOutput + q.question + "\n\n"
         for a in q.answers:
-          QuizOutput = QuizOutput + "[" + a.label + "] " + a.answer + "\n"
+          QuizOutput = QuizOutput + "[" + a.label + "] " + a.answer + "\n\n"
         QuizOutput = QuizOutput + "Correct Answer: " + q.correct_answer + "\n\n"
-      
+        QuizOutput = QuizOutput + "+++++\n\n\n"
+          
       container = st.container(border=True)
       container.write(QuizOutput)
       container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
