@@ -107,7 +107,8 @@ if uploaded_file is not None:
                                                             messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags. Start your answer by providing a percentage score of the accuracy, where 100% means total accuracy."},
                                                                       {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}], temperature = 0)
       check_message = completion_check.choices[0].message.content
-      st.write(check_message)
+      with st.expander("Click to review the accuracy of the quiz"):
+          st.write(check_message)
       end = time.time()
       
       st.snow()  
