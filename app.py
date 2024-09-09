@@ -90,8 +90,11 @@ if uploaded_file is not None:
           QuizOutput = "**Question " + str(index) + ": " + q.question + "**  \n"
           for a in q.answers:
             QuizOutput = QuizOutput + a.label + ". " + a.answer + "  \n"
-          QuizOutput = QuizOutput + "**Correct Answer: " + q.correct_answer + "**  \n"
           st.markdown(QuizOutput)
+          ca = "**Correct Answer: " + q.correct_answer + "**"
+          st.expander("Click for Correct Answer to Question " + str(index)):
+              st.markdown(ca)
+          QuizOutput = QuizOutput + ca
           index = index + 1
         
       #container = st.container(border=True)
