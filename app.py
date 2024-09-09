@@ -98,14 +98,14 @@ if uploaded_file is not None:
           QuizOutput = QuizOutput + ca
           index = index + 1
           TotalQuizOutput = TotalQuizOutput + "<Question>\n" + QuizOutput + "\n</Question>\n\n" 
-        end = time.time()
+      end = time.time()
 
       st.write("Time to generate: " + str(round(end-start,2)) + " seconds")
 
       start = time.time()
       completion_check = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
-                                                      messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags."},
-                                                                {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}])
+                                                            messages=[{"role": "system", "content": "Check the accuracy of the questions in the <Question> tags against the input text contained in the <input_text> tags."},
+                                                                      {"role": "user", "content": TotalQuizOutput + "<input_text>\n" + raw_text + "\n</input_text>"}])
       check_message = completion_check.choices[0].message
       st.write(check_message)
       end = time.time()
