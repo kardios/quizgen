@@ -90,7 +90,7 @@ if uploaded_file is not None:
         QuizOutput = QuizOutput + q.question + "\n"
         for a in q.answers:
           QuizOutput = QuizOutput + "[" + a.label + "] " + a.answer + "\n"
-        QuizOutput = QuizOutput + q.correct_answer + "\n\n"
+        QuizOutput = QuizOutput + "Correct Answer: " + q.correct_answer + "\n\n"
       
       container = st.container(border=True)
       container.write(QuizOutput)
