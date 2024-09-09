@@ -85,14 +85,15 @@ if uploaded_file is not None:
       message = completion.choices[0].message
       end = time.time()
 
-      QuizOutput = ""
-      for q in message.parsed.questions:
-        QuizOutput = QuizOutput + q.question + "\n\n"
-        for a in q.answers:
-          QuizOutput = QuizOutput + "[" + a.label + "] " + a.answer + "\n\n"
-        QuizOutput = QuizOutput + "Correct Answer: " + q.correct_answer + "\n\n"
-        QuizOutput = QuizOutput + "\n\n"
-          
+      TotalQuizOutput = ""
+      for index in range(0,range(len(message.parsed.questions))):
+          q = message.parsed.questions[index]
+          QuizOutput = str(index) + ". " + q.question + "\n\n"
+          for a in q.answers:
+            QuizOutput = QuizOutput + a.label + ". " + a.answer + "\n\n"
+          QuizOutput = QuizOutput + "Correct Answer: " + q.correct_answer + "\n\n"
+          TotalQuizOutput = TotalQuizOutput + QuizOutput
+        
       container = st.container(border=True)
       container.write(QuizOutput)
       container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
