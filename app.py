@@ -91,12 +91,12 @@ if uploaded_file is not None:
         for a in q.answers:
           QuizOutput = QuizOutput + "[" + a.label + "] " + a.answer + "\n\n"
         QuizOutput = QuizOutput + "Correct Answer: " + q.correct_answer + "\n\n"
-        QuizOutput = QuizOutput + "+++++\n\n\n"
+        QuizOutput = QuizOutput + "\n\n"
           
       container = st.container(border=True)
       container.write(QuizOutput)
       container.write("Time to generate: " + str(round(end-start,2)) + " seconds")
       bot.send_message(chat_id=recipient_user_id, text="QuizGen")
-      st_copy_to_clipboard(output_text)
+      st_copy_to_clipboard(QuizOutput)
   except:
     st.error(" Error occurred when running model", icon="🚨")
