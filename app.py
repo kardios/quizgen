@@ -76,7 +76,7 @@ if uploaded_file is not None:
       raw_text = raw_text + text + "\n"
 
   try:
-    with st.spinner("Running AI Model..."):
+    with st.spinner("Running AI Model....."):
       start = time.time()
       completion = client.beta.chat.completions.parse(model="gpt-4o-2024-08-06",
                                                       messages=[{"role": "system", "content": quiz_prompt},
